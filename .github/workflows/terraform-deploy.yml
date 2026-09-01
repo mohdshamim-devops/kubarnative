@@ -13,7 +13,6 @@ jobs:
   deploy:
     name: Terraform apply (dev)
     runs-on: ubuntu-latest
-    environment: dev
 
     defaults:
       run:
@@ -23,7 +22,7 @@ jobs:
     env:
       ARM_CLIENT_ID: ${{ secrets.CLIENTID }}
       ARM_CLIENT_SECRET: ${{ secrets.CLIENTSECRET }}
-      ARM_TENANT_ID: ${{ secrets.TENANTID }}
+      ARM_TENANT_ID: "64d09dd7-d7a9-4307-8a32-17f9a6666e4a"
       ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTIONID }}
 
     steps:
@@ -32,12 +31,14 @@ jobs:
 
       - name: Sign in to Azure
         run: |
-          az login --service-principal \
+          az login \
+            --service-principal \
             --username "$ARM_CLIENT_ID" \
             --password "$ARM_CLIENT_SECRET" \
-            --tenant "$ARM_TENANT_ID"
+            --tenant "64d09dd7-d7a9-4307-8a32-17f9a6666e4a"
 
-          az account set --subscription "$ARM_SUBSCRIPTION_ID"
+          az account set \
+            --subscription "$ARM_SUBSCRIPTION_ID"
 
       - name: Check Azure account
         run: |
