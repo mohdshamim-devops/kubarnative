@@ -39,6 +39,10 @@ jobs:
 
           az account set --subscription "$ARM_SUBSCRIPTION_ID"
 
+      - name: Check Azure account
+        run: |
+          az account show --output table
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
