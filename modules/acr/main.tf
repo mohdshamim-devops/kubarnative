@@ -1,16 +1,10 @@
-resource "azurerm_container_registry" "this" {
-  name                = var.name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  sku                 = var.sku
-  admin_enabled       = false
-  tags                = var.tags
+resource "azurerm_container_registry" "acr" {
+  for_each = var.acr_name
+  name                = each.value.name
+  resource_group_name = each.value.rg_name
+  location            = each.value.location
+  sku                 = each.value.sku
+  admin_enabled       = each.value.admin_enabled
+
 }
 
-output "id" {
-  value = azurerm_container_registry.this.id
-}
-
-output "login_server" {
-  value = azurerm_container_registry.this.login_server
-}
